@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DemandeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function () {
+    return view('home');
+});
+Route::get('/lesRdv', function () {
+    return view('lesRdv');
+})->name("lesRdv");
+Route::get('/lesDemandes', function () {
+    return view('demandList');
+})->name("lesDemandes");
+Route::get('getList', [DemandeController::class, 'demandelist'])->name('getList');
+
