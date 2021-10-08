@@ -34,11 +34,10 @@
                                             <tr>
                                                 <th>Date de la demande</th>
                                                 <th>Nom  et prenom</th>
-                                                <th> prenom</th>
                                                 <th>Document </th>
                                                 <th>Paiement</th>
                                                 <th>Status</th>
-                                                <th>Date de rdv</th>
+                                                <th>DETAIL</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -56,13 +55,32 @@
                 </div>
 
             </div>
-
             <footer class="footer text-center">
                 All Rights Reserved by Matrix-admin. Designed and Developed by <a
                     href="https://www.wrappixel.com">WrapPixel</a>.
             </footer>
             <!-- ============================================================== -->
-            <!-- End footer -->
+            <!--more info modal -->
+           <!-- Button trigger modal -->
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">PLUS D'INFORMATION</h5>
+
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-DANGER" data-dismiss="modal">FERMER</button>
+                  <button type="button" class="btn btn-primary">EN COURS</button>
+                </div>
+              </div>
+            </div>
+          </div>
             <!-- ============================================================== -->
         </div>
 
@@ -93,9 +111,7 @@
                     {
                         "data": "created_at"
                     },
-                    {
-                        "data": "nom"
-                    },
+
 
                     {
                         "data": "prenom"
@@ -108,13 +124,38 @@
                     {
                         "data": "prix"
                     },
+                    
                     {
                         "data": "status"
                     },
+
                     {
                         "data": "validite"
                     }
                 ],
+                "columnDefs":[
+                    {
+                        "targets": -1,
+                        // "data": "status_rdv",
+
+                        render : function(data, type, row, meta){
+                            return "<button type='button' class='btn btn-primary' data-toggle='modal'  data-whatever='@mdo' value="+data+"  data-target='#exampleModal'> Voir fiche</button>";
+
+
+                        }
+                    },
+
+                    {
+                        "targets": -5,
+                        "data": "prenom",
+                        render: function(data, type, row, meta){
+                            return row.nom + ' ' + data;
+                        }
+                    },
+
+
+                ],
+
 
 
             });

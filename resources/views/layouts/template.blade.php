@@ -11,6 +11,7 @@
     <meta name="description"
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
+
     <title>Matrix Admin Lite Free Versions Template by WrapPixel</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
@@ -19,6 +20,9 @@
     <!-- Custom CSS -->
     <link href="{{ asset('assets/dist/css/style.min.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/bootstrap.min.css') }}">
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets/dist/js/bootstrap.min.js') }}"></script>
 
 
 </head>
