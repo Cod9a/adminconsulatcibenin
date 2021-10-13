@@ -1,9 +1,13 @@
+import axios from "axios";
+
 export default (indexUrl) => ({
     q: "",
     demands: [],
     prev_link: null,
     next_link: null,
     selectedDemand: null,
+    rejectionModal: false,
+    justificationText: "",
     init() {
         this.fetchData();
     },
@@ -42,18 +46,41 @@ export default (indexUrl) => ({
         this.selectedDemand = null;
     },
     updateStatus(demand, status) {
+        if (demand.status === status) return;
         axios
-            .put(`${indexUrl}/${demand}`, {
+            .put(`${indexUrl}/${demand.id}`, {
                 status,
             })
             .then((result) => {
                 let selectedDemand = this.demands.filter(
-                    (item) => demand === item.id
+                    (item) => demand.id === item.id
                 )[0];
                 selectedDemand.status = status;
                 this.$dispatch("notify", {
                     message: "Status mis a jour avec succes",
                 });
             });
+    },
+    rejectSelectedDemand() {
+        this.rejectionModal = true;
+    },
+    onRejectionConfirmed() {
+        axios
+            .put(`${indexUrl}/${this.selectedDemand.id}/reject`, {
+                justification: this.justificationText,
+            })
+            .then((result) => {
+                this.fetchData();
+                this.rejectionModal = false;
+                this.selectedDemand = null;
+                this.justificationText = "";
+                this.$dispatch("notify", {
+                    message: "Demande rejetee avec succes",
+                });
+            });
+    },
+    onRejectionCancelled() {
+        this.rejectionModal = false;
+        this.selectedDemand = null;
     },
 });

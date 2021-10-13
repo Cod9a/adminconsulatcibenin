@@ -8429,6 +8429,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (indexUrl) {
   return {
     q: "",
@@ -8436,13 +8439,15 @@ __webpack_require__.r(__webpack_exports__);
     prev_link: null,
     next_link: null,
     selectedDemand: null,
+    rejectionModal: false,
+    justificationText: "",
     init: function init() {
       this.fetchData();
     },
     fetchData: function fetchData() {
       var _this = this;
 
-      axios.get("".concat(indexUrl)).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(indexUrl)).then(function (result) {
         _this.demands = result.data.data;
         _this.prev_link = result.data.prev_page_url;
         _this.next_link = result.data.next_page_url;
@@ -8451,7 +8456,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchNext: function fetchNext() {
       var _this2 = this;
 
-      axios.get(this.next_link).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.next_link).then(function (result) {
         _this2.demands = result.data.data;
         _this2.prev_link = result.data.prev_page_url;
         _this2.next_link = result.data.next_page_url;
@@ -8460,7 +8465,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchPrev: function fetchPrev() {
       var _this3 = this;
 
-      axios.get(this.prev_link).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.prev_link).then(function (result) {
         _this3.demands = result.data.data;
         _this3.prev_link = result.data.prev_page_url;
         _this3.next_link = result.data.next_page_url;
@@ -8469,7 +8474,7 @@ __webpack_require__.r(__webpack_exports__);
     search: function search() {
       var _this4 = this;
 
-      axios.get("".concat(indexUrl, "?q=").concat(this.q)).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(indexUrl, "?q=").concat(this.q)).then(function (result) {
         _this4.demands = result.data.data;
         _this4.prev_link = result.data.prev_page_url;
         _this4.next_link = result.data.next_page_url;
@@ -8484,11 +8489,12 @@ __webpack_require__.r(__webpack_exports__);
     updateStatus: function updateStatus(demand, status) {
       var _this5 = this;
 
-      axios.put("".concat(indexUrl, "/").concat(demand), {
+      if (demand.status === status) return;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().put("".concat(indexUrl, "/").concat(demand.id), {
         status: status
       }).then(function (result) {
         var selectedDemand = _this5.demands.filter(function (item) {
-          return demand === item.id;
+          return demand.id === item.id;
         })[0];
 
         selectedDemand.status = status;
@@ -8497,6 +8503,30 @@ __webpack_require__.r(__webpack_exports__);
           message: "Status mis a jour avec succes"
         });
       });
+    },
+    rejectSelectedDemand: function rejectSelectedDemand() {
+      this.rejectionModal = true;
+    },
+    onRejectionConfirmed: function onRejectionConfirmed() {
+      var _this6 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().put("".concat(indexUrl, "/").concat(this.selectedDemand.id, "/reject"), {
+        justification: this.justificationText
+      }).then(function (result) {
+        _this6.fetchData();
+
+        _this6.rejectionModal = false;
+        _this6.selectedDemand = null;
+        _this6.justificationText = "";
+
+        _this6.$dispatch("notify", {
+          message: "Demande rejetee avec succes"
+        });
+      });
+    },
+    onRejectionCancelled: function onRejectionCancelled() {
+      this.rejectionModal = false;
+      this.selectedDemand = null;
     }
   };
 });

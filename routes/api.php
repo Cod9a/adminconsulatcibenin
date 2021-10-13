@@ -24,3 +24,4 @@ Route::get('/meetings', [MeetingsController::class, 'index'])->name('api.meeting
 Route::delete('/meetings/{meeting}', [MeetingsController::class, 'destroy'])->name('api.meetings.delete');
 Route::get('/demands', [DemandsController::class, 'index'])->name('api.demands.index');
 Route::put('/demands/{demand}', [DemandsController::class, 'update'])->name('api.demands.update');
+Route::put('/demands/{demand}/reject', [DemandsController::class, 'reject'])->name('api.demands.reject');

@@ -30,4 +30,9 @@ class Demand extends Model
     {
         return $this->created_at->format('d/m/Y');
     }
+
+    public function rejection()
+    {
+        return $this->hasOne(DemandRejection::class);
+    }
 }

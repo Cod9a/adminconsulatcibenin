@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Demand;
+use App\Models\DemandRejection;
+use App\Notifications\DemandRejected;
 use Illuminate\Http\Request;
 
 class DemandsController extends Controller
 {
     public function index()
     {
-        $demands = Demand::with(['document', 'user', 'encloseds'])->paginate();
+        $demands = Demand::with(['document', 'user', 'encloseds', 'rejection'])->paginate();
         return response()->json($demands);
     }
 
@@ -20,6 +22,19 @@ class DemandsController extends Controller
         ]);
         $demand->status = $request->status;
         $demand->save();
+        return response()->json([], 201);
+    }
+
+    public function reject(Demand $demand, Request $request)
+    {
+        $request->validate([
+            'justification' => 'required|string',
+        ]);
+        $demandRejection = DemandRejection::create([
+            'demand_id' => $demand->id,
+            'justification' => $request->justification,
+        ]);
+        $demand->user->notify(new DemandRejected($demandRejection));
         return response()->json([], 201);
     }
 }
