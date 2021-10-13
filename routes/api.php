@@ -16,12 +16,12 @@ use App\Http\Controllers\DemandsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/meetings', [MeetingsController::class, 'index'])->name('api.meetings.index');
-Route::delete('/meetings/{meeting}', [MeetingsController::class, 'destroy'])->name('api.meetings.delete');
-Route::get('/demands', [DemandsController::class, 'index'])->name('api.demands.index');
-Route::put('/demands/{demand}', [DemandsController::class, 'update'])->name('api.demands.update');
-Route::put('/demands/{demand}/reject', [DemandsController::class, 'reject'])->name('api.demands.reject');
+Route::middleware(['auth:api'])->get('/meetings', [MeetingsController::class, 'index'])->name('api.meetings.index');
+Route::middleware(['auth:api', 'can:is-admin'])->delete('/meetings/{meeting}', [MeetingsController::class, 'destroy'])->name('api.meetings.delete');
+Route::middleware(['auth:api'])->get('/demands', [DemandsController::class, 'index'])->name('api.demands.index');
+Route::middleware(['auth:api', 'can:is-admin'])->put('/demands/{demand}', [DemandsController::class, 'update'])->name('api.demands.update');
+Route::middleware(['auth:api', 'can:is-admin'])->put('/demands/{demand}/reject', [DemandsController::class, 'reject'])->name('api.demands.reject');
