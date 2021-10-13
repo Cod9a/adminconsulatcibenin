@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DemandeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +16,9 @@ use App\Http\Controllers\DemandeController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function () {
-    return view('home');
-});
-Route::get('/lesRdv', function () {
-    return view('lesRdv');
-})->name("lesRdv");
-Route::get('/lesDemandes', function () {
-    return view('demandList');
-})->name("lesDemandes");
-Route::get('getList', [DemandeController::class, 'demandelist'])->name('getList');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
