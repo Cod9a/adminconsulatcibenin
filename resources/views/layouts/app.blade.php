@@ -30,9 +30,9 @@
                     {{ $slot }}
                 </main>
             </div>
-            <div class="bg-blue-600 fixed inset-x-0 bottom-0" x-data="{show: false, timeout: null, message: ''}" @notify.window="clearTimeout(timeout); message = $event.detail.message; show = true; timeout = setTimeout(() => show = true, 2000)"
+            <div class="bg-blue-600 fixed inset-x-0 bottom-0" x-data="{show: false, timeout: null, message: ''}" @notify.window="clearTimeout(timeout); message = $event.detail.message; show = true; timeout = setTimeout(() => show = false, 2000)"
                 x-show.transition.out.opacity.duration.1500ms="show"
-                x-transion:leave.opacity.duration.1500ms>
+                x-transion:leave.opacity.duration.1500ms x-cloak>
                 <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between flex-wrap">
                     <div class="w-0 flex-1 flex items-center">
