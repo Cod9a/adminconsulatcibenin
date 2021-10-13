@@ -12,12 +12,19 @@ class Meeting extends Model
     protected $guarded = [];
     protected $casts = [
         'meeting_date' => 'datetime',
+        'deleted' => 'boolean',
     ];
     protected $appends = [
         'meeting_date_formatted'
     ];
 
-    public function getMeetingDateFormattedAttribute() {
-        return $this->meeting_date->format('d M Y à H:i');
+    public function getMeetingDateFormattedAttribute()
+    {
+        return $this->meeting_date->isoFormat('DD MMM YY - HH:mm');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

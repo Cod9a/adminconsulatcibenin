@@ -21,4 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::get('/meetings', fn () => view('meetings/index'))->name('meetings');
+Route::get('/demands', fn () => view('demands/index'))->name('demands');
+
+require __DIR__ . '/auth.php';

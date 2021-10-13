@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -23,11 +24,17 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'nom' => $this->faker->firstName(),
+            'prenom' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
+            'date_nais' => $this->faker->date(),
+            'lieu_nais' => $this->faker->city(),
+            'cni' => $this->faker->unique()->creditCardNumber(),
+            'identification' => Str::random(16),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'role_id' => Role::firstWhere('key', 'client')->id,
         ];
     }
 
@@ -41,6 +48,15 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+            ];
+        });
+    }
+
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role_id' => Role::firstWhere('key', 'admin')->id,
             ];
         });
     }
