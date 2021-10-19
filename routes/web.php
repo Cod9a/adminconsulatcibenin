@@ -23,5 +23,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/meetings', fn () => view('meetings/index'))->name('meetings');
 Route::get('/demands', fn () => view('demands/index'))->name('demands');
+Route::view('/test', 'meetings/show')->name('meetings.show');
 
 require __DIR__ . '/auth.php';
