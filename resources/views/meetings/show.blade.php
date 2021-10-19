@@ -6,7 +6,10 @@
   </x-slot>
   <div
     x-data="{qrScanner: null}"
-    x-init="qrScanner = new QrScanner($refs.videoElm, result => console.log('decoded qr code:', result)); qrScanner.start()">
+    x-init="qrScanner = new QrScanner($refs.videoElm, (result) => {
+            let informations = JSON.parse(result);
+            console.log(informations)
+    }); qrScanner.start()">
     <div class="mx-auto relative">
       <video
         src=""
