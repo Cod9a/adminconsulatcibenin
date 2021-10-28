@@ -34,6 +34,7 @@ class DemandsController extends Controller
             'demand_id' => $demand->id,
             'justification' => $request->justification,
         ]);
+        $demand->forceFill(['status' => 'REJETE'])->save();
         $demand->user->notify(new DemandRejected($demandRejection));
         return response()->json([], 201);
     }

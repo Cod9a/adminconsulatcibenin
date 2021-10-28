@@ -8372,17 +8372,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 /* harmony import */ var _components_MeetingsIndex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/MeetingsIndex */ "./resources/js/components/MeetingsIndex.js");
 /* harmony import */ var _components_DemandsIndex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/DemandsIndex */ "./resources/js/components/DemandsIndex.js");
-/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
+/* harmony import */ var _components_WaitingQueueItemsIndex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/WaitingQueueItemsIndex */ "./resources/js/components/WaitingQueueItemsIndex.js");
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/popper.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
 
 
+
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
-window.createPopper = _popperjs_core__WEBPACK_IMPORTED_MODULE_3__.createPopper;
+window.createPopper = _popperjs_core__WEBPACK_IMPORTED_MODULE_4__.createPopper;
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("meetingsIndex", _components_MeetingsIndex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("demandsIndex", _components_DemandsIndex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data("waitingQueueItemsIndex", _components_WaitingQueueItemsIndex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
 /***/ }),
@@ -8406,6 +8409,13 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true;
+var tokenVar = document.querySelector('meta[name="csrf-token"]');
+
+if (tokenVar) {
+  window.axios.defaults.headers.common["X-CSRF-TOKEN"] = tokenVar.getAttribute("content");
+}
+
 
 
 qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"].WORKER_PATH = _file_loader_node_modules_qr_scanner_qr_scanner_worker_min_js__WEBPACK_IMPORTED_MODULE_1__["default"];
@@ -8622,6 +8632,35 @@ __webpack_require__.r(__webpack_exports__);
     },
     cancelDeletion: function cancelDeletion() {
       this.deleted = null;
+    }
+  };
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/WaitingQueueItemsIndex.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/WaitingQueueItemsIndex.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (indexUrl) {
+  return {
+    waitingQueueItems: [],
+    init: function init() {
+      this.fetchData();
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      axios.get("".concat(indexUrl)).then(function (result) {
+        _this.waitingQueueItems = result.data.data;
+      });
     }
   };
 });

@@ -9,6 +9,12 @@ window._ = require('lodash');
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true;
+const tokenVar = document.querySelector('meta[name="csrf-token"]');
+if (tokenVar) {
+    window.axios.defaults.headers.common["X-CSRF-TOKEN"] =
+        tokenVar.getAttribute("content");
+}
 
 import QrScanner from 'qr-scanner';
 import QrScannerWorkerPath from '!!file-loader!../../node_modules/qr-scanner/qr-scanner-worker.min.js'
