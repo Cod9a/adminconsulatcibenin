@@ -48,7 +48,7 @@
                 duration-150
                 ease-in-out
               ">
-              <div>{{ Auth::user()->nom.' '.Auth::user()->prenom }}</div>
+              <div>{{ Auth::user()->name }}</div>
 
               <div class="ml-1">
                 <svg

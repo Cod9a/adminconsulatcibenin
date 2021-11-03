@@ -9,7 +9,7 @@ class MeetingsController extends Controller
 {
     public function index()
     {
-        $meetings = Meeting::query()->with(['user'])->where('deleted', false);
+        $meetings = Meeting::query();
         if (request()->has('date')) {
             $meetings = $meetings->whereDate('meeting_date', '=', request()->get('date'));
         }

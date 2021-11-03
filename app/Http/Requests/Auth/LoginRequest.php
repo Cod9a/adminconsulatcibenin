@@ -54,14 +54,6 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        $user = User::firstWhere('email', $this->email);
-        if ($user->role->key !== 'admin') {
-            Auth::logout();
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
         RateLimiter::clear($this->throttleKey());
     }
 

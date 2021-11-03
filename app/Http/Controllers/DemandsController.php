@@ -11,7 +11,7 @@ class DemandsController extends Controller
 {
     public function index()
     {
-        $demands = Demand::with(['document', 'user', 'encloseds', 'rejection'])->paginate();
+        $demands = Demand::with(['document', 'user', 'encloseds', 'rejection', 'documentForm'])->paginate();
         return response()->json($demands);
     }
 

@@ -35,4 +35,9 @@ class Demand extends Model
     {
         return $this->hasOne(DemandRejection::class);
     }
+
+    public function documentForm()
+    {
+        return $this->hasOne(DocumentForm::class);
+    }
 }

@@ -30,9 +30,5 @@ class AuthServiceProvider extends ServiceProvider
         if (!$this->app->routesAreCached()) {
             Passport::routes();
         }
-
-        Gate::define('is-admin', function (User $user) {
-            return $user->role->key === 'admin';
-        });
     }
 }
