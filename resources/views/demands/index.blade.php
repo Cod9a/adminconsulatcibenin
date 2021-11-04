@@ -22,7 +22,7 @@
             x-model="q"
             type="search"
             name="q"
-            placeholder="Rehercher par nom du document"
+            placeholder="Rehercher par status du document"
             class="
               py-1
               border-gray-300

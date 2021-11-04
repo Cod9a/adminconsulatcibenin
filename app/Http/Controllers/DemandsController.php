@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 
 class DemandsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $demands = Demand::with(['document', 'user', 'encloseds', 'rejection', 'documentForm'])->paginate();
-        return response()->json($demands);
+        $demands = Demand::with(['document', 'user', 'encloseds', 'rejection', 'documentForm']);
+        if ($request->has('q')) {
+            $demands = $demands->where('status', 'like', '%'.$request->q.'%');
+        }
+        return response()->json($demands->paginate());
     }
 
     public function update(Demand $demand, Request $request)
@@ -34,7 +37,7 @@ class DemandsController extends Controller
             'demand_id' => $demand->id,
             'justification' => $request->justification,
         ]);
-        $demand->forceFill(['status' => 'REJETE'])->save();
+        $demand->forceFill(['status' => 'rejete'])->save();
         $demand->user->notify(new DemandRejected($demandRejection));
         return response()->json([], 201);
     }
