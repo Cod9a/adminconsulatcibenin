@@ -7,6 +7,24 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <meta
+      content="Administration de la gestion des documents du Consulat Honoraire du Bénin en Côte d'Ivoire"
+      name="description" />
+    <meta property="og:image" content="{{ asset('assets/images/p.jpg') }}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="861" />
+    <meta property="og:image:height" content="622" />
+    <meta name="propeller" content="d9ad28c7269cb797267dc2acc59ee8e6" />
+    <meta name="msapplication-TileColor" content="#eaeaea" />
+    <meta name="theme-color" content="#eaeaea" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+
     <!-- Fonts -->
     <link
       rel="stylesheet"
