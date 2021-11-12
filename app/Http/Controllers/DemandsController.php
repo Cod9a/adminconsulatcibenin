@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Demand;
 use App\Models\DemandRejection;
-use App\Notifications\DemandRejected;
+use App\Mail\DemandRejected;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DemandsController extends Controller
 {
@@ -13,7 +14,7 @@ class DemandsController extends Controller
     {
         $demands = Demand::with(['document', 'user', 'encloseds', 'rejection', 'documentForm']);
         if ($request->has('q')) {
-            $demands = $demands->where('status', 'like', '%'.$request->q.'%');
+            $demands = $demands->where('status', 'like', '%' . $request->q . '%');
         }
         return response()->json($demands->paginate());
     }
@@ -38,7 +39,7 @@ class DemandsController extends Controller
             'justification' => $request->justification,
         ]);
         $demand->forceFill(['status' => 'rejete'])->save();
-        $demand->user->notify(new DemandRejected($demandRejection));
+        Mail::to($demand->email)->send(new DemandRejected($demand));
         return response()->json([], 201);
     }
 }
