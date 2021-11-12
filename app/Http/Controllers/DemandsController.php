@@ -16,7 +16,7 @@ class DemandsController extends Controller
         if ($request->has('q')) {
             $demands = $demands->where('status', 'like', '%' . $request->q . '%');
         }
-        return response()->json($demands->paginate());
+        return response()->json($demands->paginate(8));
     }
 
     public function update(Demand $demand, Request $request)
