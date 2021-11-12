@@ -39,7 +39,7 @@ class DemandsController extends Controller
             'justification' => $request->justification,
         ]);
         $demand->forceFill(['status' => 'rejete'])->save();
-        Mail::to($demand->email)->send(new DemandRejected($demand));
+        Mail::to($demand->documentForm->email)->send(new DemandRejected($demand));
         return response()->json([], 201);
     }
 }
