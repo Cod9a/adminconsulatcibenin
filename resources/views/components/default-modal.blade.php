@@ -46,7 +46,7 @@
         md:max-w-3xl
         lg:max-w-4xl
         sm:w-full
-        max-w-screen max-h-screen
+        max-w-screen
       "
       x-transition:enter="ease-out duration-300"
       x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"

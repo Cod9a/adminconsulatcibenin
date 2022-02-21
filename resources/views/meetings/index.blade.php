@@ -24,31 +24,61 @@
                 <thead class="bg-gray-50">
                   <tr>
                     <th
-                      scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      ">
-                      Type de rendez-vous
-                    </th>
-                    <th
-                      scope="col"
-                      class="
-                        px-6
-                        py-3
-                        text-left text-xs
-                        font-medium
-                        text-gray-500
-                        uppercase
-                        tracking-wider
-                      ">
-                      Date du rendez-vous
-                    </th>
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    <input type="checkbox" name="main" class="mainCheckbox" onclick="toggle()">
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Num Dossier
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Nom & Prénom(s)
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tr
+                    ">
+                    Date de rendez-vous
+                  </th>
                     <th scope="col" class="relative px-6 py-3">
                       <span class="sr-only">Edit</span>
                     </th>
@@ -57,11 +87,32 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                   <template x-for="meeting in meetings">
                     <tr>
+                      <td
+                      scope="col"
+                      class="
+                        px-6
+                        py-3
+                        text-left text-xs
+                        font-medium
+                        text-gray-500
+                        uppercase
+                        tracking-wider
+                        rounded-tl
+                      ">
+                      <input type="checkbox" name="main" class="mainCheckbox" onclick="toggle()">
+                    </td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                           <div
                             class="text-sm font-medium text-gray-900"
-                            x-text="meeting.meeting_type === 0 ? 'Empreintes biométriques & signature électronique' : 'Retrait de document'"></div>
+                            x-text="'CC-' + meeting.date_demand_formatted + meeting.formatted_id"></div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div
+                            class="text-sm font-medium text-gray-900"
+                            x-text="meeting.first_name + ' ' + meeting.last_name"></div>
                         </div>
                       </td>
                       <td
@@ -92,20 +143,19 @@
                             disabled:opacity-50
                           "
                           :disabled="meeting.deleted">
-                          <span
-                            ><svg
-                              class="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg
-                          ></span>
-                          <span>Supprimer</span>
+                          <a
+                        @click.prevent=""
+                        class="
+                          text-amber-50
+                          hover:text-blue-900
+                          inline-flex
+                          space-x-1
+                          font-medium
+                          disabled:opacity-50
+                          cursor-pointer
+                        "
+                        ><i class="fas fa-chevron-right"></i></a
+                      >
                         </button>
                       </td>
                     </tr>

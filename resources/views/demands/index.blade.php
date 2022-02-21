@@ -22,7 +22,7 @@
             x-model="q"
             type="search"
             name="q"
-            placeholder="Rehercher par status du document"
+            placeholder="Rechercher un document"
             class="
               py-1
               border-gray-300
@@ -82,6 +82,19 @@
             </button>
           </div>
         </form>
+        <div x-data="{ tab: 'all' }">
+          <a href="#" @click.prevent="getI('all')" period="all" class="p-3 border mr-1 my-3 bg-white inline-block" :class="{ 'active': tab === 'all' }" >Tous</a>
+          <a href="#" @click.prevent="getI('today')" period="today" class="p-3 border mr-1 my-3 bg-white inline-block" :class="{ 'active': tab === 'today' }" >Aujourd'hui</a>
+          <a href="#" @click.prevent="getI('week')" period="week" class="p-3 border mr-1 my-3 bg-white inline-block" :class="{ 'active': tab === 'week' }" >Cette semaine</a>
+          <a href="#" @click.prevent="getI('month')" period="month" class="p-3 border mr-1 my-3 bg-white inline-block" :class="{ 'active': tab === 'month' }" >Ce mois</a>
+          <a href="#" @click.prevent="getI('year')" period="year" class="p-3 border mr-1 my-3 bg-white inline-block" :class="{ 'active': tab === 'year' }" >Cette année</a>
+        </div>
+        
+        <!-- <a href="#" class="mr-2" style="margin-top: 1em; margin-bottom: 1em; display: inline-block;">Tout</a>
+        <a href="#" class="mr-2" style="margin-top: 1em; margin-bottom: 1em; display: inline-block;">Aujourd'hui</a>
+        <a href="#" class="mr-2" style="margin-top: 1em; margin-bottom: 1em; display: inline-block;">Semaine</a>
+        <a href="#" class="mr-2" style="margin-top: 1em; margin-bottom: 1em; display: inline-block;">Mois</a>
+        <a href="#" class="mr-2" style="margin-top: 1em; margin-bottom: 1em; display: inline-block;">Année</a> -->
       </div>
       <div
         class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 hide-scroll"
@@ -103,7 +116,63 @@
                       tracking-wider
                       rounded-tl
                     ">
-                    Nom du document demande
+                    <input type="checkbox" name="main" class="mainCheckbox" onclick="toggle()">
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Num Dossier
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Nom & Prénom(s)
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Date de naissance
+                  </th>
+                  <th
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                    Profession
                   </th>
                   <th
                     scope="col"
@@ -116,7 +185,7 @@
                       uppercase
                       tracking-wider
                     ">
-                    Statut
+                    Statut demande
                   </th>
                   <th
                     scope="col"
@@ -140,17 +209,71 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 <template x-for="demand in demands">
                   <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td
+                    scope="col"
+                    class="
+                      px-6
+                      py-3
+                      text-left text-xs
+                      font-medium
+                      text-gray-500
+                      uppercase
+                      tracking-wider
+                      rounded-tl
+                    ">
+                      <input type="checkbox" name="sel">
+                    </td>
+                    <td class="px-2 py-4 whitespace-nowrap">
                       <div class="flex items-center">
                         <div class="ml-4">
                           <div
                             class="text-sm font-medium text-gray-900"
-                            x-text="demand.document.title"></div>
+                            x-text="'CC-' + demand.formatted_date + demand.formatted_id"></div>
                         </div>
                       </div>
                     </td>
 
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-2 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div
+                            class="text-sm font-medium text-gray-900"
+                            x-text="demand.first_name + ' ' + demand.last_name"></div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="px-2 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div
+                            class="text-sm font-medium text-gray-900"
+                            x-text="demand.formatted_birthdate"></div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="px-2 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div
+                            class="text-sm font-medium text-gray-900"
+                            x-text="demand.job"></div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="px-2 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div
+                            class="text-xs font-medium text-gray-900 px-2 py-1 border border-2 rounded-lg font-semibold"
+                            x-text="demand.status" :class="demand.status == 'rejeté' ? 'text-red-600 border-red-600' : (demand.status == 'disponible' ? 'text-blue-600 border-blue-600' : '')"></div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- <td class="px-6 py-4 whitespace-nowrap">
                       <template x-if="demand.rejection === null">
                         <div
                           class="relative inline-block text-left"
@@ -297,10 +420,10 @@
                           Rejeté
                         </span>
                       </template>
-                    </td>
+                    </td> -->
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                      x-text="demand.formatted_date"></td>
+                      x-text="demand.formatted_date2"></td>
                     <td
                       class="
                         px-6
@@ -312,7 +435,7 @@
                       <a
                         @click.prevent="setSelectedDemand(demand)"
                         class="
-                          text-blue-600
+                          text-amber-50
                           hover:text-blue-900
                           inline-flex
                           space-x-1
@@ -320,14 +443,14 @@
                           disabled:opacity-50
                           cursor-pointer
                         "
-                        >Details</a
+                        ><i class="fas fa-chevron-right"></i></a
                       >
                     </td>
                   </tr>
                 </template>
                 <template x-if="demands.length === 0">
                   <tr>
-                    <td colspan="5">
+                    <td colspan="8">
                       <div
                         class="
                           flex flex-col
@@ -407,13 +530,16 @@
     </div>
     <x-default-modal x-show="selectedDemand !== null" x-cloak>
       <x-slot name="content">
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="bg-white h-auto px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div class="sm:flex">
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-              <h3
+              <div class="flex justify-between">
+                <h3
                 class="text-lg leading-6 font-medium text-gray-900"
                 id="modal-title"
-                x-text="`Detail de la demande de ${selectedDemand?.document?.title} `"></h3>
+                x-text="`Détail de la demande`"></h3> {{-- de ${selectedDemand?.document?.title} --}}
+                <i class="far fa-times-circle fa-2x text-red-600 cursor-pointer" @click.prevent="cancelOutSelectedDemand()"></i>
+              </div>
               <div
                 class="
                   mt-8
@@ -457,146 +583,146 @@
                   <label class="text-sm text-gray-600" for="last-name"
                     >Nom</label
                   >
-                  <span x-text="selectedDemand.document_form.last_name"></span>
+                  <span x-text="selectedDemand.last_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="first-name"
                     >Prénom(s)</label
                   >
-                  <span x-text="selectedDemand.document_form.first_name"></span>
+                  <span x-text="selectedDemand.first_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="birthdate"
                     >Date de naissance</label
                   >
-                  <span x-text="selectedDemand.document_form.birthdate"></span>
+                  <span x-text="selectedDemand.formatted_birthdate"></span>
                 </div>
-                <div class="flex flex-col">
+                <!-- <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="origin-country"
                     >Pays de naissance</label
                   >
-                  <span x-text="selectedDemand.document_form.first_name"></span>
-                </div>
+                  <span x-text="selectedDemand.origin_country"></span>
+                </div> -->
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="origin-commune"
                     >Commune de naissance</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.origin_commune"></span>
+                    x-text="selectedDemand.origin_commune"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="job"
                     >Profession</label
                   >
-                  <span x-text="selectedDemand.document_form.job"></span>
+                  <span x-text="selectedDemand.job"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="diploma"
                     >Diplôme</label
                   >
-                  <span x-text="selectedDemand.document_form.diploma"></span>
+                  <span x-text="selectedDemand.diploma"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="phone"
                     >Numéro de téléphone</label
                   >
-                  <span x-text="selectedDemand.document_form.phone"></span>
+                  <span x-text="selectedDemand.phone"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="phone-alt"
                     >Numéro de téléphone alternatif</label
                   >
-                  <span x-text="selectedDemand.document_form.phone_alt"></span>
+                  <span x-text="selectedDemand.phone_alt"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="genre">Sexe</label>
                   <span
-                    x-text="selectedDemand.document_form.genre === 'male' ? 'Masculin' : 'Féminin'"></span>
+                    x-text="selectedDemand.genre === 'male' ? 'Masculin' : 'Féminin'"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="spouse-name"
                     >Nom de votre époux</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.spouse_name"></span>
+                    x-text="selectedDemand.spouse_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="email">Email</label>
-                  <span x-text="selectedDemand.document_form.email"></span>
+                  <span x-text="selectedDemand.email"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="mailbox"
                     >Boîte Postale</label
                   >
-                  <span x-text="selectedDemand.document_form.mailbox"></span>
+                  <span x-text="selectedDemand.mailbox"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="father-last-name"
                     >Nom du père</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.father_last_name"></span>
+                    x-text="selectedDemand.father_last_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="father-first-name"
                     >Prénom du père(s)</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.father_first_name"></span>
+                    x-text="selectedDemand.father_first_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="mother-last-name"
                     >Nom de la mère</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.mother_last_name"></span>
+                    x-text="selectedDemand.mother_last_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="mother-first-name"
                     >Prénom de la mère(s)</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.mother_first_name"></span>
+                    x-text="selectedDemand.mother_first_name"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="ethnic-grp"
                     >Ethnie</label
                   >
-                  <span x-text="selectedDemand.document_form.ethnic_grp"></span>
+                  <span x-text="selectedDemand.ethnic_grp"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="arrival-date-ci"
                     >Date d'arrivée en Côte d'Ivoire</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.arrival_date_ci"></span>
+                    x-text="selectedDemand.arrival_date_ci"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="residence-commune"
                     >Commune de résidence</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.residence_commune"></span>
+                    x-text="selectedDemand.residence_commune"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600"
                     >Situation matrimoniale</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.marital_situation === 'single' ? 'Célibataire' : 'Marié(e)'"></span>
+                    x-text="selectedDemand.marital_situation === 'single' ? 'Célibataire' : 'Marié(e)'"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="n-children"
                     >Nombre d'enfants</label
                   >
-                  <span x-text="selectedDemand.document_form.email"></span>
+                  <span x-text="selectedDemand.n_children"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="ravip-number"
                     >Numéro d'enrôlement Ravip</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.ravip_number"></span>
+                    x-text="selectedDemand.ravip_number"></span>
                 </div>
                 <div class="flex flex-col">
                   <label
@@ -605,67 +731,67 @@
                     >Contact au Bénin</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.benin_contact_fullname"></span>
+                    x-text="selectedDemand.benin_contact_fullname"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="benin-contact-phone"
                     >Numéro de téléphone du contact</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.benin_contact_phone"></span>
+                    x-text="selectedDemand.benin_contact_phone"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="ci-contact-fullname"
                     >Contact en Côte d'Ivoire</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.ci_contact_fullname"></span>
+                    x-text="selectedDemand.ci_contact_fullname"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="ci-contact-phone"
                     >Numéro de téléphone du contact</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.ci_contact_phone"></span>
+                    x-text="selectedDemand.ci_contact_phone"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="eye-color"
                     >Couleur des Yeux</label
                   >
-                  <span x-text="selectedDemand.document_form.eye_color"></span>
+                  <span x-text="selectedDemand.eye_color"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="hair-color"
                     >Couleur des cheveux</label
                   >
-                  <span x-text="selectedDemand.document_form.hair_color"></span>
+                  <span x-text="selectedDemand.hair_color"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="complexion-color"
                     >Teint</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.complexion_color"></span>
+                    x-text="selectedDemand.complexion_color"></span>
                 </div>
                 <div class="flex flex-col">
                   <label class="text-sm text-gray-600" for="height"
                     >Taille (en cm)</label
                   >
-                  <span x-text="selectedDemand.document_form.height"></span>
+                  <span x-text="selectedDemand.height"></span>
                 </div>
                 <div class="flex flex-col md:col-span-2">
                   <label class="text-sm text-gray-600" for="other-signs"
                     >Autres signes</label
                   >
                   <span
-                    x-text="selectedDemand.document_form.other_signs"></span>
+                    x-text="selectedDemand.other_signs"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <template x-if="!selectedDemand?.rejection">
+          {{--<template x-if="!selectedDemand?.rejection">
             <button
               @click="rejectSelectedDemand()"
               type="button"
@@ -691,7 +817,7 @@
               ">
               Rejeter la demande
             </button>
-          </template>
+          </template>--}}
           <button
             @click.prevent="cancelOutSelectedDemand()"
             type="button"
@@ -717,6 +843,56 @@
               sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
             ">
             Fermer
+          </button>
+          <button
+            @click="rejectSelectedDemand()"
+            type="button"
+            class="
+              w-full
+              inline-flex
+              justify-center
+              rounded-md
+              border border-transparent
+              shadow-sm
+              px-4
+              py-2
+              bg-red-600
+              text-base
+              font-medium
+              text-white
+              hover:bg-red-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-red-500
+              sm:ml-3 sm:w-auto sm:text-sm
+            " x-show="selectedDemand.status == 'en-attente'">
+            Rejeter la demande
+          </button>
+          <button
+            @click="onValidated()"
+            type="button"
+            class="
+              w-full
+              inline-flex
+              justify-center
+              rounded-md
+              border border-transparent
+              shadow-sm
+              px-4
+              py-2
+              bg-blue-600
+              text-base
+              font-medium
+              text-white
+              hover:bg-blue-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-red-500
+              sm:ml-3 sm:w-auto sm:text-sm
+            " x-cloak x-show="selectedDemand.status == 'en-attente'">
+            Accepter la demande
           </button>
         </div>
       </x-slot>

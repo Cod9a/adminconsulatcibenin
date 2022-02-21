@@ -23,9 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:api'])->get('/meetings', [MeetingsController::class, 'index'])->name('api.meetings.index');
 Route::middleware(['auth:api'])->delete('/meetings/{meeting}', [MeetingsController::class, 'destroy'])->name('api.meetings.delete');
-Route::middleware(['auth:api'])->get('/demands', [DemandsController::class, 'index'])->name('api.demands.index');
+Route::middleware(['auth:api'])->get('/demands/{period?}', [DemandsController::class, 'index'])->name('api.demands.index');
 Route::middleware(['auth:api'])->put('/demands/{demand}', [DemandsController::class, 'update'])->name('api.demands.update');
 Route::middleware(['auth:api'])->put('/demands/{demand}/reject', [DemandsController::class, 'reject'])->name('api.demands.reject');
+Route::middleware(['auth:api'])->put('/demands/{demand}/validate', [DemandsController::class, 'validated'])->name('api.demands.validate');
 
 Route::middleware(['auth:api'])->get('/waiting-queue-items', [WaitingQueueItemController::class, 'index'])->name("waiting-queue-items.index");
 Route::middleware(['auth:api'])->post('/waiting-queue-items', [WaitingQueueItemController::class, 'store'])->name("waiting-queue-items.store");

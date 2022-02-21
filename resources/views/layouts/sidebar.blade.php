@@ -7,7 +7,6 @@
             <li>Demandes</li>
             <li>Rendez-vous</li>
         </ul>
-
     </div>
 
 </div>

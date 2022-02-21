@@ -15,7 +15,6 @@ class DemandeController extends Controller
         $demande = DB::table('demands')
         ->join('documents', 'documents.id', '=', 'demands.document_id')
         ->join('users', 'users.id', '=', 'demands.user_id')
-        ->select('users.nom','users.prenom','documents.*','demands.created_at','demands.status')
         ->get();
 
         $reponse = json_encode(array('data' => $demande), TRUE);

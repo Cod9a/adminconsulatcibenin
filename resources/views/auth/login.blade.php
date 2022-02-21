@@ -25,6 +25,7 @@
           type="email"
           name="email"
           :value="old('email')"
+          placeholder="Adresse email"
           required
           autofocus />
       </div>
@@ -38,6 +39,7 @@
           class="block mt-1 w-full"
           type="password"
           name="password"
+          placeholder="Mot de passe"
           required
           autocomplete="current-password" />
       </div>

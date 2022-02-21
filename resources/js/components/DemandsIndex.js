@@ -39,6 +39,15 @@ export default (indexUrl) => ({
             this.next_link = result.data.next_page_url;
         });
     },
+    getI(period) {
+        this.q = ''
+        this.tab = period
+        axios.get(`${indexUrl}/${period}`).then((result) => {
+            this.demands = result.data.data;
+            this.prev_link = result.data.prev_page_url;
+            this.next_link = result.data.next_page_url;
+        });
+    },
     setSelectedDemand(demand) {
         this.selectedDemand = demand;
     },
@@ -64,9 +73,35 @@ export default (indexUrl) => ({
     rejectSelectedDemand() {
         this.rejectionModal = true;
     },
+    onValidated() {
+        axios
+            .put(`${indexUrl}/${this.selectedDemand.d_id}/validate`, {
+                
+            })
+            .then((result) => {
+                this.fetchData();
+                this.selectedDemand = null;
+                this.$dispatch("notify", {
+                    message: "Demande validée avec succès",
+                });
+            });
+    },
+    onRejected() {
+        axios
+            .put(`${indexUrl}/${this.selectedDemand.d_id}/reject`, {
+                
+            })
+            .then((result) => {
+                this.fetchData();
+                this.selectedDemand = null;
+                this.$dispatch("notify", {
+                    message: "Demande rejetée avec succès",
+                });
+            });
+    },
     onRejectionConfirmed() {
         axios
-            .put(`${indexUrl}/${this.selectedDemand.id}/reject`, {
+            .put(`${indexUrl}/${this.selectedDemand.d_id}/reject`, {
                 justification: this.justificationText,
             })
             .then((result) => {

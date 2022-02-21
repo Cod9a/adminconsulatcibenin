@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Demand;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +21,15 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/meetings', fn () => view('meetings/index'))->name('meetings');
-Route::get('/demands', fn () => view('demands/index'))->name('demands');
+Route::get('/export/{period?}', [DashboardController::class, 'export'])->name('excel.export');
+
+Route::get('/meetings', fn () => view('meetings/index'))->middleware(['auth'])->name('meetings');
+Route::get('/demands/{period?}', fn () => view('demands/index'))->middleware(['auth'])->name('demands');
 Route::view('/test', 'meetings/show')->name('meetings.show');
+
+Route::get('a', function() {
+    $demands = Demand::with(['document', 'user', 'encloseds', 'rejection', 'documentForm'])->get();
+    dd($demands);
+});
 
 require __DIR__ . '/auth.php';

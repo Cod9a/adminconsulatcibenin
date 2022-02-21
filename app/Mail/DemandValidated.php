@@ -7,10 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class DemandRejected extends Mailable
+class DemandValidated extends Mailable
 {
-    use Queueable, SerializesModels;
-
     public $demand;
 
     /**
@@ -30,6 +28,6 @@ class DemandRejected extends Mailable
      */
     public function build()
     {
-        return $this->subject('Votre demande a été rejetée')->markdown('emails.demand.rejected');
+        return $this->subject('Votre demande a été validée')->markdown('emails.demand.validated');
     }
 }

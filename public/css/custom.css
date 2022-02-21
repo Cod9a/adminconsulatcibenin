@@ -1,0 +1,20 @@
+.active {
+	color: #fff;
+	--tw-bg-opacity: 1;
+	border-color: rgba(251, 191, 65, var(--tw-bg-opacity));
+	background-color: rgba(251, 191, 65, var(--tw-bg-opacity));
+}
+
+.period .bg-amber-50 i {
+	font-size: 18px;
+	padding: .2em;
+}
+
+.border-amber-50 {
+	--tw-border-opacity: 1;
+	border-color: rgba(251, 191, 65, var(--tw-border-opacity));
+}
+
+.text-amber-50 {
+	color: rgb(251, 191, 65) !important;
+}

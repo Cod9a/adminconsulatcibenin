@@ -28,10 +28,14 @@
     <!-- Fonts -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -109,5 +113,19 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      function toggle(){  
+          var main = document.querySelector('.mainCheckbox');  
+          var ele = document.getElementsByName('sel');  
+          for(var i = 0; i < ele.length; i++){  
+              if(ele[i].type == 'checkbox') {
+                if(main.checked)
+                  ele[i].checked = true; 
+                else
+                  ele[i].checked = false;  
+              }
+          }  
+      }  
+    </script>
   </body>
 </html>
